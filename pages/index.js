@@ -7,13 +7,22 @@ export default function Home() {
     event.preventDefault();
 
     const fetchBooks = async () => {
-      const response = await fetch(
-        `https://www.googleapis.com/books/v1/volumes?q=${searchInput}`
-      );
-      const data = await response.json();
-      console.log(data.items);
-      setSearchResults(data.items);
+      try {
+        const response = await fetch(
+          `https://www.googleapis.com/books/v1/volumes?q=${searchInput}`
+        );
+        if (!response.ok) {
+          setSearchResults("Error");
+          throw new Error("Error occurred while fetching data");
+        }
+        const data = await response.json();
+        console.log(data.items);
+        setSearchResults(data.items);
+      } catch (err) {
+        console.log(err);
+      }
     };
+
     fetchBooks();
   };
   const handleSearchBoxChange = (event) => {
@@ -50,7 +59,13 @@ export default function Home() {
           </button>
         </form>
         <div className="flex flex-wrap transition justify-center">
-          {searchResults === undefined ? (
+          {searchResults === "Error" ? (
+            <div className="text-4xl font-black text-red-400 leading-loose">
+              Error occurred while fetching data
+              <br />
+              please try again
+            </div>
+          ) : searchResults === undefined ? (
             <div className="text-4xl font-black text-red-400">
               No results found
             </div>

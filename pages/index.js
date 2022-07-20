@@ -38,7 +38,9 @@ export default function Home() {
             type="text"
             onChange={handleSearchBoxChange}
             value={searchInput}
-            placeholder="Book Name ..."
+            placeholder="Search Through Books Name ..."
+            name="inputField"
+            required
           />
           <button
             className="bg-white text-blue-500 hover:text-slate-100 font-medium text-xl ml-10 rounded-lg px-6 pt-2 pb-3  hover:bg-blue-500 border-blue-500 border-4 transition active:bg-blue-50 active:border-blue-50 shadow-lg shadow-gray-500 active:shadow-sm active:shadow-slate-800"
@@ -48,22 +50,26 @@ export default function Home() {
           </button>
         </form>
         <div className="flex flex-wrap transition justify-center">
-          {searchResults.map((book) => (
-            <BookCard
-              key={book.id}
-              CoverImage={
-                book.volumeInfo.imageLinks == undefined
-                  ? undefined
-                  : book.volumeInfo.imageLinks
-              }
-              Title={book.volumeInfo.title}
-              Author={book.volumeInfo.authors}
-              Publisher={book.volumeInfo.publisher}
-              BookUrl={
-                "https://www.pinterest.com/caycepasko/book-cover-design/"
-              }
-            />
-          ))}
+          {searchResults === undefined ? (
+            <div className="text-4xl font-black text-red-400">
+              No results found
+            </div>
+          ) : (
+            searchResults.map((book) => (
+              <BookCard
+                key={book.id}
+                CoverImage={
+                  book.volumeInfo.imageLinks == undefined
+                    ? undefined
+                    : book.volumeInfo.imageLinks
+                }
+                Title={book.volumeInfo.title}
+                Author={book.volumeInfo.authors}
+                Publisher={book.volumeInfo.publisher}
+                BookUrl={book.volumeInfo.infoLink}
+              />
+            ))
+          )}
         </div>
       </div>
     </div>

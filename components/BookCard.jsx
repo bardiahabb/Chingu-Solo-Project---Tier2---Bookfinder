@@ -22,7 +22,7 @@ export default function BookCard(props) {
             publisher :{" "}
             {props.Publisher == undefined ? "not found" : props.Publisher}
           </div>
-          <div className="text-sm text-slate-500 font-medium">publishing?</div>
+          {/* <div className="text-sm text-slate-500 font-medium">publishing?</div> */}
           <a href={props.BookUrl} target="_blank" rel="noreferrer">
             <button className="text-base absolute bottom-4 bg-blue-500 rounded-md px-4 py-1 text-slate-50 shadow-md shadow-gray-500 active:shadow-sm active:shadow-gray-500 transition active:scale-[0.98]">
               see this book
